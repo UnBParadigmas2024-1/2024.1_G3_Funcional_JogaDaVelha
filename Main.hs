@@ -16,22 +16,71 @@ printBoard board = do
             putStrLn $ intercalate "|" $ map showPiece row ++ [""]
         showPiece Empty      = " "
         showPiece (Pawn White) = "W"
+
         showPiece (Pawn Black) = "B"
+
+-- Função para validar uma posição no tabuleiro
+isValidPosition :: String -> Bool
+isValidPosition [c, r] = c `elem` ['a'..'h'] && r `elem` ['1'..'8']
+isValidPosition _ = False
+
+-- Função para verificar se o movimento é válido
+isValidMove :: (Int, Int) -> (Int, Int) -> Board -> Player -> Bool
+isValidMove (x1, y1) (x2, y2) board player =
+    isValidPosition [toEnum (y1 + 97), toEnum (x1 + 49)] &&
+    isValidPosition [toEnum (y2 + 97), toEnum (x2 + 49)] &&
+    abs (x2 - x1) == 1 && abs (y2 - y1) == 1 &&
+    isEmptyOrEnemyPiece (x2, y2) board player &&
+    isOwnPiece (x1, y1) board player
+    where
+        isEmptyOrEnemyPiece (x, y) board player = case board !! x !! y of
+            Empty -> True
+            Pawn p -> p /= player
+        isOwnPiece (x, y) board player = case board !! x !! y of
+            Pawn p -> p == player
+            _ -> False
+
+
+-- Função para ler uma posição válida
+readValidPosition :: IO String
+readValidPosition = do
+    pos <- getLine
+    if isValidPosition pos
+        then return pos
+        else do
+            putStrLn "Posição inválida. Tente novamente:"
+            readValidPosition 
 
 -- Inicia o jogo
 startMatch :: Board -> Player -> IO ()
 startMatch board player = do
     printBoard board
-    putStrLn $ "\nJogo iniciado para as pecas: " ++ show player
+    putStrLn $ "\nJogo iniciado para as peças: "  ++ show player ++ " \nEscolha a posiçao da peça para movimentar: "
+    startPos <- readValidPosition
+    putStrLn $ "Você selecionou a posição: " ++ startPos
+    putStrLn $ "Agora selecione o movimento para a peça "++ startPos ++ "->: " 
+    endPos <- readValidPosition
+    putStrLn $ "Movimento: " ++ startPos ++ " -> " ++ endPos
+    let (x1, y1) = coordsFromPosition startPos
+        (x2, y2) = coordsFromPosition endPos
+    if isValidMove (x1, y1) (x2, y2) board player
+        then putStrLn "Movimento válido!"
+        else putStrLn "Movimento inválido."
+
+-- Converte posição para coordenadas
+coordsFromPosition :: String -> (Int, Int)
+coordsFromPosition [c, r] = (fromEnum r - 49, fromEnum c - 97)
 
 -- Define o tabuleiro inicial
 fullBoard :: Board
 fullBoard = [[pieceAt r c | c <- [0..7]] | r <- [0..7]]
   where
     pieceAt r c
-      | (r + c) `mod` 2 == 0 && r < 3 = Pawn Black
-      | (r + c) `mod` 2 == 0 && r > 4 = Pawn White
+      | even (r + c) && r < 3 = Pawn Black
+      | even (r + c) && r > 4 = Pawn White
       | otherwise = Empty
+
+
 
 -- Retirar os comentarios a seguir apos os membros terem visto essas outras opcoes!
 -- Conforme pesquisas realizadas, seguem as versoes iniciais da funcao (fullBoard) para o preenchimento inicial do tabuleiro
