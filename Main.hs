@@ -9,14 +9,14 @@ type Board = [[Piece]]
 printBoard :: Board -> IO ()
 printBoard board = do
     mapM_ printRowIndexed $ zip [8,7..1] board
-    putStrLn "  a b c d e f g h"
+    putStrLn "   a b c d e f g h"
     where
         printRowIndexed (i, row) = do
-            putStr $ show i ++ " "
-            putStrLn $ intercalate "|" $ map showPiece row
+            putStr $ show i ++ " |" -- Adiciona uma barra vertical antes de cada linha
+            putStrLn $ intercalate "|" $ map showPiece row ++ [""]
         showPiece Empty      = " "
-        showPiece (Pawn White) = "X"
-        showPiece (Pawn Black) = "Y"
+        showPiece (Pawn White) = "W"
+        showPiece (Pawn Black) = "B"
 
 -- Inicia o jogo
 startMatch :: Board -> Player -> IO ()
