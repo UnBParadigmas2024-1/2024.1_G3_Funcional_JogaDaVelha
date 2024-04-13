@@ -26,6 +26,7 @@ printBoard board = do
 isValidPosition :: (Char, Char) -> Bool
 isValidPosition (c, r) = c `elem` ['a' .. 'h'] && r `elem` ['1' .. '8']
 
+-- Converte uma posição em coordenadas
 coordsFromPosition :: String -> (Int, Int)
 coordsFromPosition [c, r] = (fromEnum r - 49, fromEnum c - 97)
 coordsFromPosition _ = error "A posição deve ser uma string de dois caracteres: coluna e linha."
