@@ -25,8 +25,6 @@ printBoard board = do
 -- Função para validar uma posição no tabuleiro
 isValidPosition :: (Char, Char) -> Bool
 isValidPosition (c, r) = c `elem` ['a' .. 'h'] && r `elem` ['1' .. '8']
-isValidPosition _ = False
-
 
 coordsFromPosition :: String -> (Int, Int)
 coordsFromPosition [c, r] = (fromEnum r - 49, fromEnum c - 97)
