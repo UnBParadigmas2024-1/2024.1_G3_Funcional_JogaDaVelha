@@ -19,11 +19,20 @@ initialBoard = replicate 3 (replicate 3 Nothing)
 
 -- Função para exibir o tabuleiro
 printBoard :: Board -> IO ()
-printBoard = mapM_ (putStrLn . intercalate " | " . map showRow)
-  where
-    showRow :: Maybe Player -> String
-    showRow Nothing = " "
-    showRow (Just player) = show player
+printBoard board = do
+    putStrLn "  1 | 2 | 3 "
+    putStrLn "------------"
+    mapM_ putStrLn (zipWith printRow [1..] board)
+    putStrLn "------------"
+
+-- Função para imprimir linhas do tabuleiro
+printRow :: Int -> [Maybe Player] -> String
+printRow i row = show i ++ " " ++ intercalate " | " (map showRow row)
+
+-- Função para imprimir o conteúdo das casas do tabuleiro
+showRow :: Maybe Player -> String
+showRow Nothing = " "
+showRow (Just player) = show player
 
 -- Função para jogar o jogo
 playGame :: Board -> Player -> IO ()
@@ -89,4 +98,3 @@ handleInvalidMove _ board player = do
     putStrLn "Movimento inválido. Por favor, tente novamente."
     playGame board player
     return (0, 0)  -- Retornando um par de coordenadas fictícias para satisfazer o tipo IO (Int, Int)
-
