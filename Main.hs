@@ -1,5 +1,6 @@
 import Data.List
 import Data.Maybe
+import Control.Exception
 
 -- Define os tipos de dados para o jogador e o tabuleiro
 data Player = X | O deriving (Eq, Show)
@@ -31,18 +32,18 @@ playGame board player = do
     printBoard board
     putStrLn $ "\nJogador " ++ show player ++ ", sua vez. Por favor, escolha uma linha e coluna (de 0 a 2), separadas por espaço:"
     move <- getLine
-    let [row, col] = map read (words move)
-    if validMove board row col
-        then do
-            let newBoard = updateBoard board row col player
-            if checkWin newBoard player
-                then putStrLn $ "\nJogador " ++ show player ++ " venceu!"
-                else if fullBoard newBoard
-                    then putStrLn "O jogo terminou em empate."
-                    else playGame newBoard (nextPlayer player)
-        else do
-            putStrLn "Movimento inválido. Por favor, tente novamente."
-            playGame board player
+    let parseMove = do
+            let [row, col] = map read (words move)
+            if validMove board row col
+                then return (row, col)
+                else throw InvalidMoveException
+    (row, col) <- catch parseMove (\e -> handleInvalidMove e board player)
+    let newBoard = updateBoard board row col player
+    if checkWin newBoard player
+        then putStrLn $ "\nJogador " ++ show player ++ " venceu!"
+        else if fullBoard newBoard
+            then putStrLn "O jogo terminou em empate."
+            else playGame newBoard (nextPlayer player)
 
 -- Verifica se o movimento é válido
 validMove :: Board -> Int -> Int -> Bool
@@ -76,3 +77,16 @@ fullBoard = all (all isJust)
 nextPlayer :: Player -> Player
 nextPlayer X = O
 nextPlayer O = X
+
+-- Exceção para movimento inválido
+data InvalidMoveException = InvalidMoveException deriving Show
+
+instance Exception InvalidMoveException
+
+-- Manipula movimento inválido
+handleInvalidMove :: InvalidMoveException -> Board -> Player -> IO (Int, Int)
+handleInvalidMove _ board player = do
+    putStrLn "Movimento inválido. Por favor, tente novamente."
+    playGame board player
+    return (0, 0)  -- Retornando um par de coordenadas fictícias para satisfazer o tipo IO (Int, Int)
+
