@@ -1,116 +1,104 @@
-import Data.List (intercalate)
-import Data.Char (chr, ord)
+import Data.List
+import Data.Maybe
+import Control.Exception
 
+-- Define os tipos de dados para o jogador e o tabuleiro
+data Player = X | O deriving (Eq, Show)
+type Board = [[Maybe Player]]
 
--- Definicao dos tipos de dados
-data Player = White | Black deriving (Eq, Show)
+-- Função principal para iniciar o jogo
+main :: IO ()
+main = do
+    putStrLn "Bem-vindo ao Jogo da Velha!\n"
+    putStrLn "Jogador X começa!"
+    playGame initialBoard X
 
-data Piece = Empty | Pawn Player deriving (Eq, Show)
+-- Tabuleiro inicial vazio
+initialBoard :: Board
+initialBoard = replicate 3 (replicate 3 Nothing)
 
-type Board = [[Piece]]
-
--- Printa o tabuleiro
+-- Exibe o tabuleiro
 printBoard :: Board -> IO ()
 printBoard board = do
-  mapM_ printRowIndexed $ zip [8, 7 .. 1] board
-  putStrLn "   a b c d e f g h"
+    putStrLn "\n  1 | 2 | 3 "
+    putStrLn "------------"
+    mapM_ putStrLn (zipWith printRow [1..] board)
+    putStrLn "------------"
+
+-- Imprime linhas do tabuleiro
+printRow :: Int -> [Maybe Player] -> String
+printRow i row = show i ++ " " ++ intercalate " | " (map showRow row)
+
+-- Imprime conteúdo das casas do tabuleiro
+showRow :: Maybe Player -> String
+showRow Nothing = " "
+showRow (Just player) = show player
+
+-- Função para jogar o jogo
+playGame :: Board -> Player -> IO ()
+playGame board player = do
+    putStrLn $ "\nTabuleiro atual:"
+    printBoard board
+    putStrLn $ "\nJogador " ++ show player ++ ", sua vez. Por favor, escolha uma coluna e linha (de 1 a 3), separadas por espaço:"
+    move <- getLine
+    let parseMove = do
+            let [colStr, rowStr] = words move
+                row = read rowStr - 1
+                col = read colStr - 1
+            if validMove board row col
+                then return (row, col)
+                else throw InvalidMoveException
+    (row, col) <- catch parseMove (\e -> handleInvalidMove e board player)
+    let newBoard = updateBoard board row col player
+    if checkWin newBoard player
+        then do
+            printBoard newBoard
+            putStrLn $ "\nJogador " ++ show player ++ " venceu!"
+        else if fullBoard newBoard
+            then putStrLn "O jogo terminou em empate."
+            else playGame newBoard (nextPlayer player)
+
+-- Verifica se o movimento é válido
+validMove :: Board -> Int -> Int -> Bool
+validMove board row col = row >= 0 && row < 3 && col >= 0 && col < 3 && isEmptyCell board row col
+
+-- Verifica se a célula está vazia
+isEmptyCell :: Board -> Int -> Int -> Bool
+isEmptyCell board row col = isNothing $ (board !! row) !! col
+
+-- Atualiza o tabuleiro com o movimento do jogador
+updateBoard :: Board -> Int -> Int -> Player -> Board
+updateBoard board row col player = 
+    let (rowBefore, currentRow:rowAfter) = splitAt row board
+        newRow = take col currentRow ++ [Just player] ++ drop (col + 1) currentRow
+    in rowBefore ++ [newRow] ++ rowAfter
+
+-- Verifica se há um vencedor
+checkWin :: Board -> Player -> Bool
+checkWin board player =
+    any (\row -> all (== Just player) row) (rows ++ cols ++ diags)
   where
-    printRowIndexed (i, row) = do
-      putStr $ show i ++ " |" -- Adiciona uma barra vertical antes de cada linha
-      putStrLn $ intercalate "|" $ map showPiece row ++ [""]
-    showPiece Empty = " "
-    showPiece (Pawn White) = "W"
-    showPiece (Pawn Black) = "B"
+    rows = board
+    cols = transpose board
+    diags = [[(board !! i) !! i | i <- [0..2]], [(board !! i) !! (2 - i) | i <- [0..2]]]
 
--- Função para validar uma posição no tabuleiro
-isValidPosition :: (Char, Char) -> Bool
-isValidPosition (c, r) = c `elem` ['a' .. 'h'] && r `elem` ['1' .. '8']
+-- Verifica se o tabuleiro está cheio
+fullBoard :: Board -> Bool
+fullBoard = all (all isJust)
 
--- Converte uma posição em coordenadas
-coordsFromPosition :: String -> (Int, Int)
-coordsFromPosition [c, r] = (fromEnum r - 49, fromEnum c - 97)
-coordsFromPosition _ = error "A posição deve ser uma string de dois caracteres: coluna e linha."
+-- Retorna o próximo jogador
+nextPlayer :: Player -> Player
+nextPlayer X = O
+nextPlayer O = X
 
--- Função para verificar se o movimento é válido
-isValidMove :: (Int, Int) -> (Int, Int) -> Board -> Player -> Bool
-isValidMove (x1, y1) (x2, y2) board player =
-  isValidPosition (c1, c3) && isValidPosition (c2, c4) &&
-  abs (x2 - x1) == 1 && abs (y2 - y1) == 1 &&
-  isEmpty (x2, y2) board &&
-  isOwnPiece (x1, y1) board player
-  where
-    c1 = chr (x1 + 97)
-    c2 = chr (x2 + 97)
-    c3 = chr (y1 + 49)
-    c4 = chr (y2 + 49)
+-- Exceção para movimento inválido
+data InvalidMoveException = InvalidMoveException deriving Show
 
-isEmpty :: (Int, Int) -> Board -> Bool
-isEmpty (x, y) board = case board !! x !! y of
-  Empty -> True
-  _ -> False
+instance Exception InvalidMoveException
 
-isOwnPiece :: (Int, Int) -> Board -> Player -> Bool
-isOwnPiece (x, y) board player = case board !! x !! y of
-  Pawn p -> p == player
-  _ -> False
-
--- Função para ler uma posição válida
-readValidPosition :: IO String
-readValidPosition = do
-  pos <- getLine
-  let [char, numStr] = words pos
-  let column1 = head char
-  let column2 = head numStr
-  if isValidPosition (column1, column2)
-    then return pos
-    else do
-      putStrLn "Posição inválida. Tente novamente:"
-      readValidPosition
-
--- Inicia o jogo
-startMatch :: Board -> Player -> IO ()
-startMatch board player = do
-  moveLoop board player
-
-moveLoop :: Board -> Player -> IO ()
-moveLoop board player = do
-  printBoard board
-  putStrLn $ "\nJogador " ++ show player ++ " escolha a peça para movimentar: "
-  startPos <- readValidPosition
-  putStrLn $ "Você selecionou a posição: " ++ startPos
-  putStrLn $ "Agora selecione o movimento para a peça " ++ startPos ++ "->: "
-  endPos <- readValidPosition
-  putStrLn $ "Movimento: " ++ startPos ++ " -> " ++ endPos
-  let [char, numStr] = words startPos
-  let column1 = head char
-  let column2 = head numStr
-  let x1 = fromEnum column1 - 97
-  let y1 = fromEnum column2 - 49
-  print x1
-  print y1
-  let [char, numStr] = words endPos
-  let column1 = head char
-  let column2 = head numStr
-  let x2 = fromEnum column1 - 97
-  let y2 = fromEnum column2 - 49
-  print x2
-  print y2
-  if isValidMove (x1, y1) (x2, y2) board player
-    then putStrLn "Movimento válido!"
-    else do
-      putStrLn "\nMovimento inválido."  
-      putStrLn "\n\n------------------\n\n"
-      moveLoop board player
-
--- Define o tabuleiro inicial
-fullBoard :: Board
-fullBoard = [[pieceAt r c | c <- [0 .. 7]] | r <- [0 .. 7]]
-  where
-    pieceAt r c
-      | even (r + c) && r < 3 = Pawn Black
-      | even (r + c) && r > 4 = Pawn White
-      | otherwise = Empty
-
--- Funcao main
-main :: IO ()
-main = startMatch fullBoard White
+-- Manipula movimento inválido
+handleInvalidMove :: InvalidMoveException -> Board -> Player -> IO (Int, Int)
+handleInvalidMove _ board player = do
+    putStrLn "\nMovimento inválido. Por favor, tente novamente!"
+    playGame board player
+    return (0, 0)  -- Retornando um par de coordenadas fictícias para satisfazer o tipo IO (Int, Int)
