@@ -9,7 +9,7 @@ type Board = [[Maybe Player]]
 -- Função principal para iniciar o jogo
 main :: IO ()
 main = do
-    putStrLn "Bem-vindo ao Jogo da Velha!"
+    putStrLn "Bem-vindo ao Jogo da Velha!\n"
     putStrLn "Jogador X começa!"
     playGame initialBoard X
 
@@ -17,30 +17,43 @@ main = do
 initialBoard :: Board
 initialBoard = replicate 3 (replicate 3 Nothing)
 
--- Função para exibir o tabuleiro
+-- Exibe o tabuleiro
 printBoard :: Board -> IO ()
-printBoard = mapM_ (putStrLn . intercalate " | " . map showRow)
-  where
-    showRow :: Maybe Player -> String
-    showRow Nothing = " "
-    showRow (Just player) = show player
+printBoard board = do
+    putStrLn "\n  1 | 2 | 3 "
+    putStrLn "------------"
+    mapM_ putStrLn (zipWith printRow [1..] board)
+    putStrLn "------------"
+
+-- Imprime linhas do tabuleiro
+printRow :: Int -> [Maybe Player] -> String
+printRow i row = show i ++ " " ++ intercalate " | " (map showRow row)
+
+-- Imprime conteúdo das casas do tabuleiro
+showRow :: Maybe Player -> String
+showRow Nothing = " "
+showRow (Just player) = show player
 
 -- Função para jogar o jogo
 playGame :: Board -> Player -> IO ()
 playGame board player = do
     putStrLn $ "\nTabuleiro atual:"
     printBoard board
-    putStrLn $ "\nJogador " ++ show player ++ ", sua vez. Por favor, escolha uma linha e coluna (de 0 a 2), separadas por espaço:"
+    putStrLn $ "\nJogador " ++ show player ++ ", sua vez. Por favor, escolha uma coluna e linha (de 1 a 3), separadas por espaço:"
     move <- getLine
     let parseMove = do
-            let [row, col] = map read (words move)
+            let [colStr, rowStr] = words move
+                row = read rowStr - 1
+                col = read colStr - 1
             if validMove board row col
                 then return (row, col)
                 else throw InvalidMoveException
     (row, col) <- catch parseMove (\e -> handleInvalidMove e board player)
     let newBoard = updateBoard board row col player
     if checkWin newBoard player
-        then putStrLn $ "\nJogador " ++ show player ++ " venceu!"
+        then do
+            printBoard newBoard
+            putStrLn $ "\nJogador " ++ show player ++ " venceu!"
         else if fullBoard newBoard
             then putStrLn "O jogo terminou em empate."
             else playGame newBoard (nextPlayer player)
@@ -86,7 +99,6 @@ instance Exception InvalidMoveException
 -- Manipula movimento inválido
 handleInvalidMove :: InvalidMoveException -> Board -> Player -> IO (Int, Int)
 handleInvalidMove _ board player = do
-    putStrLn "Movimento inválido. Por favor, tente novamente."
+    putStrLn "\nMovimento inválido. Por favor, tente novamente!"
     playGame board player
     return (0, 0)  -- Retornando um par de coordenadas fictícias para satisfazer o tipo IO (Int, Int)
-
