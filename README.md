@@ -6,8 +6,6 @@ As seções do Template NÃO DEVEM SER OMITIDAS, sendo TODAS RELEVANTES.
 
 Paradigmas:
  - Funcional
- - Logico
- - SMA
 
 **!! *Não coloque os nomes dos alunos no título do repositório*. !!**
 
@@ -18,14 +16,20 @@ Paradigmas:
 # NomeDoProjeto
 
 **Disciplina**: FGA0210 - PARADIGMAS DE PROGRAMAÇÃO - T01 <br>
-**Nro do Grupo (de acordo com a Planilha de Divisão dos Grupos)**: XX<br>
-**Paradigma**: XXXXXXXXXX<br>
+**Nro do Grupo (de acordo com a Planilha de Divisão dos Grupos)**: 03<br>
+**Paradigma**: Funcional<br>
 
 ## Alunos
 |Matrícula | Aluno |
 | -- | -- |
-| xx/xxxxxx  |  xxxx xxxx xxxxx |
-| xx/xxxxxx  |  xxxx xxxx xxxxx |
+| 17/0007413  |  Caio Santos |
+| 21/1031664  |  Catlen Cleane Ferreira de Oliveira |
+| 20/2023681  |  Gabriel da Silva Rosa |
+| 21/2008197  |  João Pedro Alves Machado |
+| 19/0032821  |  Lorenzo Santos |
+| 21/1043718  |  Paulo Victor Fonseca Sousa |
+| 19/0020521  |  Valderson Pontes da Silva Junior |
+| 190038900  |  Victor de Souza Cabral |
 
 ## Sobre 
 Descreva o seu projeto em linhas gerais. 
