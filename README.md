@@ -37,6 +37,9 @@ Final do jogo
 
 ![Inicio do jogo](/assets/screenshot3.PNG)
 
+## Screenshots
+
+Link para o vídeo: https://www.youtube.com/watch?v=1aiKBMgHhHc
 
 ## Instalação 
 **Linguagens**:  Haskell<br>
@@ -92,10 +95,24 @@ Apresente, brevemente, como cada membro do grupo contribuiu para o projeto.
 
 ## Outros 
 
- Lições Aprendidas:;
- Percepções;
- Contribuições e Fragilidades, e
- Trabalhos Futuros.
+LIÇÕES APRENDIDAS:
+
+- Desenvolvimento da linguagem Haskell: Aprendemos os principais conceitos em sala de aula e ao desenvolver o jogo nos deparamos com algumas questões, e assim tivemos a oportunidade de nos apronfundar mais no assunto.
+- Modelagem de Dados: Aprendemos a representar o tabuleiro, executar as jogadas, verificação de jogadas inválidas e tratamento de exceções, através de funções.
+
+PERCEPÇÕES
+
+- O haskell é uma linguaguem muito interessante de se aprender, facilita muitas coisas que geralmente estamos acostumados e dificulta em outras, abordadando os problemas de uma maneira única.
+- Ao desenvolver, muitas vezes descobrimos que o que parecia difícil era mais simples do que imaginávamos, enquanto em outras ocasiões subestimamos a complexidade de certos problemas.
+
+CONTRIBUIÇÕES E FRAGILIDADES:
+
+- No início escolhemos como tema o jogo de Damas, mas tivemos muita dificuldade durante o desenvolvimento do código no movimento das peças e regras do jogo, e devido ao tempo que tinhamos disponível para entrega decidimos mudar para o jogo da Velha.
+
+TRABALHOS FUTUROS:
+
+- Desenvolvimento de uma interface para o jogo. Seria necessário fazer algumas adaptações na lógica do código, mas é bem possível implementar uma interface para esse jogo (conforme observado nas fontes a seguir).
+- Uma ideia interessante seria colocar um menu, na qual seria possível escolher entre o jogo sendo apresentado pelo terminal ou pela interface.
 
 ## Fontes
 https://github.com/haskell-game/fungen
