@@ -24,12 +24,18 @@ Paradigmas:
 ## Sobre 
 Esse projeto visa criar um jogo da velha utilizando a linguagem Haskell, uma linguagem  de programação funcional. O jogo da velha, embora seja muito antigo, se popularizou na Inglaterra no século 19, e as regras do jogo são simples. Duas pessoas jogam alternadamente, preenchendo cada um dos espaços vazios. Cada participante deve usar um símbolo (X ou O). Vence o jogador que conseguir formar primeiro uma linha com três símbolos iguais, seja ela na horizontal, vertical ou diagonal
 ## Screenshots
+
 Tela inicial:
+
 ![Inicio do jogo](/assets/Screenshot1.PNG)
+
 Inicio do jogo
-![Inicio do jogo](/assets/Screenshot2.PNG)
+
+![Inicio do jogo](/assets/screenshot2.PNG)
+
 Final do jogo
-![Inicio do jogo](/assets/Screenshot3.PNG)
+
+![Inicio do jogo](/assets/screenshot3.PNG)
 
 
 ## Instalação 
