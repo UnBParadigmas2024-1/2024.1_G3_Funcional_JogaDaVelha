@@ -37,10 +37,6 @@ Final do jogo
 
 ![Inicio do jogo](/assets/screenshot3.PNG)
 
-## Screenshots
-
-Link para o vídeo: https://www.youtube.com/watch?v=1aiKBMgHhHc
-
 ## Instalação 
 **Linguagens**:  Haskell<br>
 **Tecnologias**: GHC (Glasgow Haskell Compiler) e Stack <br>
@@ -71,14 +67,10 @@ Continue seguindo as instruções no terminal, alternando entre os jogadores at�
 O jogo anunciará o vencedor ou se o jogo terminou em empate e então terminará a execução.
 
 ## Vídeo
-Adicione 1 ou mais vídeos com a execução do projeto.
-Procure: 
-(i) Introduzir o projeto;
-(ii) Mostrar passo a passo o código, explicando-o, e deixando claro o que é de terceiros, e o que é contribuição real da equipe;
-(iii) Apresentar particularidades do Paradigma, da Linguagem, e das Tecnologias, e
-(iV) Apresentar lições aprendidas, contribuições, pendências, e ideias para trabalhos futuros.
-OBS: TODOS DEVEM PARTICIPAR, CONFERINDO PONTOS DE VISTA.
-TEMPO: +/- 15min
+
+Link para o vídeo: https://www.youtube.com/watch?v=1aiKBMgHhHc
+
+Arquivo também presente no repositório.
 
 ## Participações
 Apresente, brevemente, como cada membro do grupo contribuiu para o projeto.
