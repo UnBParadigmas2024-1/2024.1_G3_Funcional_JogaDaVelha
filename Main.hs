@@ -55,7 +55,9 @@ playGame board player = do
             printBoard newBoard
             putStrLn $ "\nJogador " ++ show player ++ " venceu!"
         else if fullBoard newBoard
-            then putStrLn "O jogo terminou em empate."
+            then do
+                printBoard newBoard                
+                putStrLn "O jogo terminou em empate."
             else playGame newBoard (nextPlayer player)
 
 -- Verifica se o movimento é válido
