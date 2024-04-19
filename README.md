@@ -1,19 +1,9 @@
-# RepositorioTemplate
-Esse repositório é para ser utilizado pelos grupos como um template inicial, da home page do Projeto.
-As seções do Template NÃO DEVEM SER OMITIDAS, sendo TODAS RELEVANTES.
-
-**!! *Atenção: Renomeie o seu repositório para (Ano.Semestre)_(Grupo)_(Paradigma)_(NomeDoProjeto)*. !!** 
 
 Paradigmas:
  - Funcional
 
-**!! *Não coloque os nomes dos alunos no título do repositório*. !!**
 
-**!! *Exemplo de título correto: 2023.2_G1_Logico_ProjetoRoteirosAereos*. !!**
- 
- (Apague esses comentários)
-
-# NomeDoProjeto
+# Jogo Da Velha
 
 **Disciplina**: FGA0210 - PARADIGMAS DE PROGRAMAÇÃO - T01 <br>
 **Nro do Grupo (de acordo com a Planilha de Divisão dos Grupos)**: 03<br>
@@ -32,24 +22,44 @@ Paradigmas:
 | 190038900  |  Victor de Souza Cabral |
 
 ## Sobre 
-Descreva o seu projeto em linhas gerais. 
-Use referências, links, que permitam conhecer um pouco mais sobre o projeto.
-Capriche nessa seção, pois ela é a primeira a ser lida pelos interessados no projeto.
-
+Esse projeto visa criar um jogo da velha utilizando a linguagem Haskell, uma linguagem  de programação funcional. O jogo da velha, embora seja muito antigo, se popularizou na Inglaterra no século 19, e as regras do jogo são simples. Duas pessoas jogam alternadamente, preenchendo cada um dos espaços vazios. Cada participante deve usar um símbolo (X ou O). Vence o jogador que conseguir formar primeiro uma linha com três símbolos iguais, seja ela na horizontal, vertical ou diagonal
 ## Screenshots
-Adicione 2 ou mais screenshots do projeto em termos de interface e/ou funcionamento.
+Tela inicial:
+![Inicio do jogo](/assets/Screenshot1.PNG)
+Inicio do jogo
+![Inicio do jogo](/assets/Screenshot2.PNG)
+Final do jogo
+![Inicio do jogo](/assets/Screenshot3.PNG)
+
 
 ## Instalação 
-**Linguagens**: xxxxxx<br>
-**Tecnologias**: xxxxxx<br>
-Descreva os pré-requisitos para rodar o seu projeto e os comandos necessários.
-Insira um manual ou um script para auxiliar ainda mais.
-Gifs animados e outras ilustrações são bem-vindos!
+**Linguagens**:  Haskell<br>
+**Tecnologias**: GHC (Glasgow Haskell Compiler) e Stack <br>
 
-## Uso 
-Explique como usar seu projeto.
-Procure ilustrar em passos, com apoio de telas do software, seja com base na interface gráfica, seja com base no terminal.
-Nessa seção, deve-se revelar de forma clara sobre o funcionamento do software.
+É necessário um compilador de Haskell, Sendo recomendado o encontrado [aqui](https://www.haskell.org/downloads/). Caso seja utilizado esse link, para rodar um código utilizando o compilador, use esse [manual de primeiros passos](https://www.haskell.org/ghcup/steps/) para rodar o projeto
+
+## **Uso** 
+Para utilizar o projeto do jogo da velha , siga os seguintes passos
+### Passos Iniciais
+* 1- Verifique se o GHC está Instalado:
+Digite ghc --version para verificar se o GHC está instalado. Você deverá ver a versão do GHC se ele estiver instalado corretamente.
+* 2- Abra o terminal no seu sistema operacional.
+* 3-Navegue até o Diretório do Projeto:
+* 4- Use o comando cd para navegar até o diretório onde você salvou o arquivo do projeto. Por exemplo:
+cd caminho/para/seu/projeto
+* 5-Compile o Código:Compile o código com o GHC usando o comando:ghc -o JogoDaVelha Main.hs
+
+* 6-Execute o Jogo:
+Após a compilação, execute o jogo com o comando:
+./JogoDaVelha
+
+### Jogando
+O jogo começará e o primeiro jogador (X) será solicitado a fazer uma jogada.
+Você deve inserir a coluna e a linha desejadas, separadas por um espaço. Por exemplo, para colocar na primeira coluna e na primeira linha, digite 1 1.
+
+Continue seguindo as instruções no terminal, alternando entre os jogadores até que o jogo termine com um vencedor ou um empate.
+
+O jogo anunciará o vencedor ou se o jogo terminou em empate e então terminará a execução.
 
 ## Vídeo
 Adicione 1 ou mais vídeos com a execução do projeto.
@@ -63,17 +73,29 @@ TEMPO: +/- 15min
 
 ## Participações
 Apresente, brevemente, como cada membro do grupo contribuiu para o projeto.
-|Nome do Membro | Contribuição | Significância da Contribuição para o Projeto (Excelente/Boa/Regular/Ruim/Nula) |
-| -- | -- | -- |
-| Fulano  |  Programação dos Fatos da Base de Conhecimento Lógica | Boa |
+| Nome do Membro                          | Contribuição | Significância da Contribuição para o Projeto |
+| --------------------------------------- | ------------ | -------------------------------------------- |
+| Caio Santos                             |              | Excelente                                    |
+| Catlen Cleane Ferreira de Oliveira      |              | Excelente                                    |
+| Gabriel da Silva Rosa                   |              | Excelente                                    |
+| João Pedro Alves Machado                |              | Excelente                                    |
+| Lorenzo Santos                          |              | Excelente                                    |
+| Paulo Victor Fonseca Sousa              |    Aprimoramento e ajuste das funções "play game", "continue game", e "handleInvalidMove", criação do readme          | Excelente                                    |
+| Valderson Pontes da Silva Junior        |              | Excelente                                    |
+| Victor de Souza Cabral                  |              | Excelente                                    |
 
 ## Outros 
-Quaisquer outras informações sobre o projeto podem ser descritas aqui. Não esqueça, entretanto, de informar sobre:
-(i) Lições Aprendidas;
-(ii) Percepções;
-(iii) Contribuições e Fragilidades, e
-(iV) Trabalhos Futuros.
+
+ Lições Aprendidas:;
+ Percepções;
+ Contribuições e Fragilidades, e
+ Trabalhos Futuros.
 
 ## Fontes
-Referencie, adequadamente, as referências utilizadas.
-Indique ainda sobre fontes de leitura complementares.
+https://github.com/haskell-game/fungen
+https://youtu.be/VxLvaHpAK-U?si=ZnWa6YIc7reyycBO
+https://youtu.be/gCVMkKgs3uQ?si=lmxzhyY83AoMypmQ
+
+Material de estudo:
+
+https://www.youtube.com/watch?v=5tCN7Q4qK9Q&list=PLfdR3_dt2rbctdMHwZG2h4aKGROujEG3j
