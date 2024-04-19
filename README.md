@@ -83,12 +83,12 @@ Apresente, brevemente, como cada membro do grupo contribuiu para o projeto.
 | --------------------------------------- | ------------ | -------------------------------------------- |
 | Caio Santos                             |              | Excelente                                    |
 | Catlen Cleane Ferreira de Oliveira      |              | Excelente                                    |
-| Gabriel da Silva Rosa                   | Desenvolvimento da lógica do jogo da velha e modificação dos participantes do readme | Excelente                                    |
+| Gabriel da Silva Rosa                   | Desenvolvimento da lógica do jogo da velha e modificação dos participantes do readme                               | Excelente                                    |
 | João Pedro Alves Machado                |              | Excelente                                    |
 | Lorenzo Santos                          |              | Excelente                                    |
-| Paulo Victor Fonseca Sousa              |    Aprimoramento e ajuste das funções "play game", "continue game", e "handleInvalidMove", criação do readme          | Excelente                                    |
+| Paulo Victor Fonseca Sousa              | Aprimoramento e ajuste das funções "play game", "continue game", e "handleInvalidMove", criação do readme          | Excelente                                       |
 | Valderson Pontes da Silva Junior        |              | Excelente                                    |
-| Victor de Souza Cabral                  |              | Excelente                                    |
+| Victor de Souza Cabral                  | Melhoria na visualização, apresentação e lógica do tabuleiro, entrada de dados e mensagens guias                   | Excelente                                    |
 
 ## Outros 
 
