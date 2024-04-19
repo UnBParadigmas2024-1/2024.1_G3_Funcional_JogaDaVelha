@@ -82,7 +82,7 @@ Apresente, brevemente, como cada membro do grupo contribuiu para o projeto.
 | Nome do Membro                          | Contribuição | Significância da Contribuição para o Projeto |
 | --------------------------------------- | ------------ | -------------------------------------------- |
 | Caio Santos                             |              | Excelente                                    |
-| Catlen Cleane Ferreira de Oliveira      |              | Excelente                                    |
+| Catlen Cleane Ferreira de Oliveira      |Desenvolvimento de Tratamento de Exceções| Excelente                                    |
 | Gabriel da Silva Rosa                   | Desenvolvimento da lógica do jogo da velha e modificação dos participantes do readme                               | Excelente                                    |
 | João Pedro Alves Machado                |              | Excelente                                    |
 | Lorenzo Santos                          |              | Excelente                                    |
